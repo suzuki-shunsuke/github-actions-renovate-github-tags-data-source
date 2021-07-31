@@ -24,12 +24,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: echo "PATH=$PWD/.akoi/bin:$PATH" >> $GITHUB_ENV
-      shell: bash
-    - name: Install akoi
-      uses: suzuki-shunsuke/akoi-installer@v0.1.0
-    - run: akoi install -c "${{ github.action_path }}/akoi.yml"
-      shell: bash
     - run: aws rds describe-db-engine-versions --region "${{ inputs.region }}" --engine "${{ inputs.engine }}" | jq -r ".DBEngineVersions[].EngineVersion" | uniq > "${{ inputs.version_file }}"
       shell: bash
       env:
