@@ -1,8 +1,7 @@
-# github-actions-aws-rds-available-engine-versions
+# github-actions-renovate-github-tags-data-source
 
 GitHub Actions to update version file and push tags.
 
-This action is used to updated RDS engine version with Renovate.
 Please see [Document](https://github.com/suzuki-shunsuke/renovate-github-tags-datasource-repositories).
 
 ## Requirements
