@@ -1,0 +1,39 @@
+name: AWS RDS available engine versions
+description: List AWS RDS available engine versions and update the version file and push tags
+inputs:
+  engine:
+    description: AWS RDS engine
+    required: true
+  region:
+    description: AWS Region
+    required: false
+    default: us-east-1
+  version_file:
+    description: file path where versions are written
+    required: false
+    default: versions.txt
+  github_token:
+    description: GitHub Access Token
+    required: true
+  aws_access_key_id:
+    description: AWS Access Key ID
+    required: true
+  aws_secret_access_key:
+    description: AWS Secret Access Key
+    required: true
+runs:
+  using: composite
+  steps:
+    - run: echo "PATH=$PWD/.akoi/bin:$PATH" >> $GITHUB_ENV
+    - name: Install akoi
+      uses: suzuki-shunsuke/akoi-installer@v0.1.0
+    - run: akoi install -c "${{ github.action_path }}/akoi.yml"
+    - run: aws rds describe-db-engine-versions --region "${{ inputs.region }}" --engine "${{ inputs.engine }}" | jq -r ".DBEngineVersions[].EngineVersion" | uniq > "${{ inputs.version_file }}"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
+    - run: bash "${{ github.action_path }}/update.sh"
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      env:
+        VERSION_FILE: ${{ inputs.github_token }}
