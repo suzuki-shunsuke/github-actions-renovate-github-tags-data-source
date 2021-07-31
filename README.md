@@ -3,7 +3,7 @@
 GitHub Actions to update version file and push tags.
 
 This action is used to updated RDS engine version with Renovate.
-Please see https://github.com/suzuki-shunsuke/poc-renovate-aws-rds
+Please see [Document](https://github.com/suzuki-shunsuke/renovate-github-tags-datasource-repositories).
 
 ## Requirements
 
